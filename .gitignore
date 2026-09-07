@@ -1,0 +1,19 @@
+cd d:\ANTI\vastraa
+
+@"
+# Virtual environment — never upload (huge + machine-specific)
+backend/venv/
+venv/
+
+# Secret keys — NEVER upload
+backend/.env
+.env
+
+# Python cache files
+*.pyc
+__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db
+"@ | Set-Content .gitignore
