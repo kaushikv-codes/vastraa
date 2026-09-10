@@ -1,38 +1,33 @@
-# app.py — The heart of your Vastraa backend
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
+from supabase import create_client
 import os
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Create the Flask application
 app = Flask(__name__)
-
-# CORS = Cross-Origin Resource Sharing
-# This allows your frontend (Next.js on port 3000) to call your backend (Flask on port 5000)
-# Without this, the browser would block the request for security reasons
 CORS(app)
 
-# Register our routes
-# Blueprint pattern = keeps routes organized in separate files
+# Connect to Supabase
+# create_client takes your URL and API key from .env
+# This is your database connection — like opening a door to the DB
+supabase = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_KEY")
+)
+
+# Make supabase available to all routes
+app.supabase = supabase
+
 from routes.products import products_bp
 app.register_blueprint(products_bp, url_prefix='/api')
-# url_prefix='/api' means all routes in products_bp become /api/products
 
-# Health check route — always useful to verify the server is running
 @app.route('/health')
 def health_check():
-    return {"status": "Vastraa backend is running! 🚀", "version": "1.0.0"}
+    return {"status": "Vastraa backend is running! 🚀", "database": "Supabase connected ✅"}
 
-
-# Run the server
 if __name__ == '__main__':
     print("🚀 Vastraa Backend Starting...")
-    print("📍 Running at: http://localhost:5000")
-    print("📦 API base: http://localhost:5000/api")
-    app.run(
-        debug=os.getenv('FLASK_DEBUG', 'True') == 'True',
-        port=5000
-    )
+    print("📍 Open: http://localhost:5000/api/products")
+    app.run(debug=True, port=5000)
