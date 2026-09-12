@@ -21,7 +21,10 @@ supabase = create_client(
 app.supabase = supabase
 
 from routes.products import products_bp
+from routes.style import style_bp          # ← ADD THIS LINE
+
 app.register_blueprint(products_bp, url_prefix='/api')
+app.register_blueprint(style_bp, url_prefix='/api')   # ← ADD THIS LINE
 
 @app.route('/health')
 def health_check():
