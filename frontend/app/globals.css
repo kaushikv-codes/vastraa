@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700&display=swap');
+
 @import "tailwindcss";
 
 @theme inline {
@@ -117,31 +117,6 @@ a, button { cursor: none; }
 }
 .marquee-track:hover { animation-play-state: paused; }
 
-/* ─── Cursor dot ────────────────────────────────────────── */
-.cursor-dot {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--saffron);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: difference;
-}
-.cursor-ring {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--ivory);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.2s;
-  opacity: 0.5;
-}
 
 /* ─── Layout Container ──────────────────────────────────── */
 .container {

@@ -7,7 +7,6 @@ import { DotsThree, X } from "@phosphor-icons/react";
 import { VastraaLogo } from "@/components/VastraaLogo";
 import { AnimatedThemeToggler } from "@/components/AnimatedThemeToggler";
 import { TextReveal } from "@/components/ui/cascade-text";
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { Dock, DockIcon } from "@/components/ui/dock";
 
 const MENU_LINKS = [
@@ -31,8 +30,6 @@ export function Navigation() {
           WebkitBackdropFilter: "blur(12px)",
           background: "var(--nav-bg)",
           borderBottom: "1px solid var(--hairline)",
-          // required for absolute-centered nav links
-          position: "fixed" as const,
         }}
       >
         {/* Wordmark */}
@@ -52,30 +49,26 @@ export function Navigation() {
           {[
             { text: "EXPLORE -", href: "#products" },
             { text: "AI STYLIST", href: "#stylist" },
-          ].map((link, i) => (
-            <React.Fragment key={link.text}>
-              {i > 0 && (
-                <span style={{ color: "var(--muted)", fontSize: "0.1rem" }}>·</span>
-              )}
-              <TextReveal
-                text={link.text}
-                href={link.href}
-                fontSize="1.01rem"
-                staggerDelay={22}
-                duration={260}
-                gradientFrom="#C84B31"
-                gradientTo="#c89d31ff"
-                gradientSpeed={2}
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontStyle: "italic",
-                  fontWeight: 900,
-                  letterSpacing: "0.1em",
-                  textDecoration: "none",
-                  padding: "0.1em 0",
-                }}
-              />
-            </React.Fragment>
+          ].map((link) => (
+            <TextReveal
+              key={link.text}
+              text={link.text}
+              href={link.href}
+              fontSize="1.01rem"
+              staggerDelay={22}
+              duration={260}
+              gradientFrom="#C84B31"
+              gradientTo="#c89d31ff"
+              gradientSpeed={2}
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontStyle: "italic",
+                fontWeight: 900,
+                letterSpacing: "0.1em",
+                textDecoration: "none",
+                padding: "0.1em 0",
+              }}
+            />
           ))}
         </div>
 
