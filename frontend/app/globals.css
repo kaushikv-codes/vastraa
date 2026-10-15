@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --animate-aurora: aurora 8s ease-in-out infinite alternate;
+  --animate-gradient-pan: gradient-pan 3s linear infinite;
+
+  @keyframes aurora {
+    0%   { background-position: 0% 50%;   }
+    25%  { background-position: 50% 100%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 0%;   }
+    100% { background-position: 0% 50%;   }
+  }
+
+  @keyframes gradient-pan {
+    0%   { background-position: 200% center; }
+    100% { background-position: 0%   center; }
+  }
+}
+
+
+/* ─── Design Tokens ─────────────────────────────────────── */
+:root {
+  --black:      #080808;
+  --ivory:      #F5F0E8;
+  --saffron:    #E8C547;
+  --terracotta: #C84B31;
+  --neutral:    #111111;
+  --muted:      rgba(245, 240, 232, 0.4);
+  --hairline:   rgba(245, 240, 232, 0.08);
+
+  /* Theme-adaptive surface colors */
+  --nav-bg:     rgba(8, 8, 8, 0.75);
+  --overlay-bg: rgba(8, 8, 8, 0.97);
+
+  --font-display: "Cabinet Grotesk", system-ui, sans-serif;
+  --font-body:    "Satoshi", system-ui, sans-serif;
+  --font-logo:    "Bebas Neue", "Cabinet Grotesk", sans-serif;
+  --font-wordmark: "Bodoni Moda", serif;
+}
+
+/* ─── Light Theme Overrides ─────────────────────────────── */
+[data-theme="light"] {
+  --black:      #F7F4EF;
+  --ivory:      #1A1814;
+  --neutral:    #EDEAE4;
+  --muted:      rgba(26, 24, 20, 0.45);
+  --hairline:   rgba(26, 24, 20, 0.1);
+
+  /* Light-mode nav: warm white frosted glass */
+  --nav-bg:     rgba(247, 244, 239, 0.82);
+  --overlay-bg: rgba(247, 244, 239, 0.97);
+}
+
+/* ─── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--black);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+body {
+  background-color: var(--black);
+  overflow-x: hidden;
+  transition: background-color 0.35s ease;
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ─── Typography ────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+
+/* ─── Cursor ────────────────────────────────────────────── */
+* { cursor: none; }
+a, button { cursor: none; }
+
+/* ─── Selection ─────────────────────────────────────────── */
+::selection {
+  background: var(--saffron);
+  color: var(--black);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--hairline); }
+
+/* ─── Utility Classes ───────────────────────────────────── */
+.hairline { border-color: var(--hairline); }
+.text-ivory   { color: var(--ivory); }
+.text-saffron { color: var(--saffron); }
+.text-terracotta { color: var(--terracotta); }
+.text-muted   { color: var(--muted); }
+.bg-neutral   { background-color: var(--neutral); }
+
+/* ─── Marquee ───────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 18s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ─── Cursor dot ────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--saffron);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--ivory);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.2s;
+  opacity: 0.5;
+}
+
+/* ─── Layout Container ──────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* ─── Section spacing ────────────────────────────────────── */
+.section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (max-width: 768px) {
+  .section { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* ─── Hide scrollbar (horizontal) ───────────────────────── */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ─── Logo: white on dark, dark on light ─────────────────── */
+.logo-adaptive {
+  filter: none;
+  transition: filter 0.35s ease;
+}
+[data-theme="light"] .logo-adaptive {
+  filter: invert(1);
+}
