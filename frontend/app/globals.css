@@ -23,8 +23,8 @@
 /* ─── Design Tokens ─────────────────────────────────────── */
 :root {
   --black:      #080808;
-  --ivory:      #F5F0E8;
-  --saffron:    #E8C547;
+  --ivory:      #F2EDE4;
+  --saffron:    #D4A847;
   --terracotta: #C84B31;
   --neutral:    #111111;
   --muted:      rgba(245, 240, 232, 0.4);

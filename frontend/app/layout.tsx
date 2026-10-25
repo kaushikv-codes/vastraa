@@ -4,6 +4,10 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { AgentationWrapper } from "@/components/AgentationWrapper";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AppProvider } from "@/contexts/AppContext";
+import { AccountSidebar } from "@/components/AccountSidebar";
+import { LooksDrawer } from "@/components/LooksDrawer";
+import { AuthModal } from "@/components/AuthModal";
 
 export const metadata: Metadata = {
   title: "Vastraa — AI Occasion Styling for Modern India",
@@ -43,12 +47,18 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <SmoothScrollProvider>
-            <SmoothCursor />
-            {children}
-          </SmoothScrollProvider>
-          {/* Agentation — dev-only, client-only annotation toolbar */}
-          <AgentationWrapper />
+          <AppProvider>
+            <SmoothScrollProvider>
+              <SmoothCursor />
+              {children}
+            </SmoothScrollProvider>
+            {/* Global UI layers — available on every page */}
+            <AccountSidebar />
+            <LooksDrawer />
+            <AuthModal />
+            {/* Agentation — dev-only, client-only annotation toolbar */}
+            <AgentationWrapper />
+          </AppProvider>
         </ThemeProvider>
       </body>
     </html>

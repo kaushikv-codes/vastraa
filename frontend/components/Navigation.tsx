@@ -8,6 +8,7 @@ import { VastraaLogo } from "@/components/VastraaLogo";
 import { AnimatedThemeToggler } from "@/components/AnimatedThemeToggler";
 import { TextReveal } from "@/components/ui/cascade-text";
 import { Dock, DockIcon } from "@/components/ui/dock";
+import { useApp } from "@/contexts/AppContext";
 
 const MENU_LINKS = [
   { label: "Explore", href: "#products" },
@@ -18,6 +19,7 @@ const MENU_LINKS = [
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+  const { openAccountSidebar, openLooksDrawer, looksCount, generatingCount } = useApp();
 
   return (
     <>
@@ -58,7 +60,7 @@ export function Navigation() {
               staggerDelay={22}
               duration={260}
               gradientFrom="#C84B31"
-              gradientTo="#c89d31ff"
+              gradientTo="#C84B31"
               gradientSpeed={2}
               style={{
                 fontFamily: "'Poppins', sans-serif",
@@ -79,37 +81,43 @@ export function Navigation() {
           iconDistance={100}
           className="gap-3"
         >
-          {/* Your Look pill — wider, so override size via style */}
+          {/* Your Looks pill — opens LooksDrawer */}
           <DockIcon
-            style={{
-              width: "auto",
-              height: "auto",
-              background: "transparent",
-              border: "none",
-            }}
+            style={{ width: "auto", height: "auto", background: "transparent", border: "none" }}
           >
-            <TextReveal
-              text="YOUR LOOK"
-              href="#stylist"
-              fontSize="0.75rem"
-              staggerDelay={18}
-              duration={240}
-              gradientFrom="#C84B31"
-              gradientTo="#c89d31ff"
-              gradientSpeed={2}
+            <button
+              onClick={openLooksDrawer}
               style={{
                 fontFamily: "'Poppins', sans-serif",
                 fontStyle: "italic",
                 fontWeight: 900,
+                fontSize: "0.75rem",
                 letterSpacing: "0.1em",
-                textDecoration: "none",
                 padding: "0.3em 0.9em",
                 border: "1px solid var(--hairline)",
                 borderRadius: "999px",
                 background: "rgba(245,240,232,0.04)",
                 whiteSpace: "nowrap",
+                color: "var(--ivory)",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4em",
+                position: "relative",
               }}
-            />
+            >
+              YOUR LOOKS
+              {(looksCount > 0 || generatingCount > 0) && (
+                <span style={{
+                  minWidth: 16, height: 16, borderRadius: "9999px",
+                  background: "var(--terracotta)",
+                  fontSize: "0.6rem", color: "#fff", fontWeight: 700,
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  padding: "0 4px",
+                }}>
+                  {generatingCount > 0 ? generatingCount : looksCount}
+                </span>
+              )}
+            </button>
           </DockIcon>
 
           {/* Theme toggler */}
@@ -125,9 +133,9 @@ export function Navigation() {
             />
           </DockIcon>
 
-          {/* Menu */}
+          {/* Menu — opens AccountSidebar */}
           <DockIcon
-            onClick={() => setOpen(!open)}
+            onClick={openAccountSidebar}
             aria-label="Menu"
             style={{
               background: "rgba(245,240,232,0.06)",
@@ -135,12 +143,7 @@ export function Navigation() {
               color: "var(--muted)",
             }}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {open
-                ? <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }}><X size={14} weight="light" /></motion.span>
-                : <motion.span key="dots" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }}><DotsThree size={16} weight="bold" /></motion.span>
-              }
-            </AnimatePresence>
+            <DotsThree size={16} weight="bold" />
           </DockIcon>
         </Dock>
       </nav>
@@ -179,7 +182,7 @@ export function Navigation() {
                       staggerDelay={28}
                       duration={280}
                       gradientFrom="#C84B31"
-                      gradientTo="#c89d31ff"
+                      gradientTo="#C84B31"
                       gradientSpeed={2.5}
                       style={{
                         fontFamily: "var(--font-display)",
