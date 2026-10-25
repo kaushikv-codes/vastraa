@@ -49,34 +49,40 @@ const chipLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
 export function AIStylist() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<{ name: string; brand: string; price: number }[] | null>(null);
+  const [results, setResults] = useState<{ name: string; brand: string; price: number; image_url?: string }[] | null>(null);
+  const [noResults, setNoResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!query.trim()) return;
-    setLoading(true); setResults(null);
+    setLoading(true); setResults(null); setNoResults(false);
     try {
-      const res = await fetch("http://localhost:5000/api/style-suggest", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ occasion: query, budget: 10000 }),
+      const res = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query.trim(), limit: 6 }),
       });
       const data = await res.json();
-      if (data.success && data.ai_suggestions?.suggestions) {
-        setResults(data.ai_suggestions.suggestions.slice(0, 3).map((s: any) => ({
-          name: s.items?.[0]?.item_type || "Styled Look",
-          brand: s.items?.[0]?.color_suggestion || "AI Curated",
-          price: s.budget || 5000,
+      if (data.results?.length > 0) {
+        setResults(data.results.slice(0, 3).map((r: any) => ({
+          name: r.name,
+          brand: r.brand,
+          price: r.price,
+          image_url: r.image_url,
         })));
       } else {
+        setNoResults(true);
         setResults(null);
       }
     } catch {
+      setNoResults(true);
       setResults(null);
     } finally {
       setLoading(false);
     }
   }
+
 
   return (
     <>

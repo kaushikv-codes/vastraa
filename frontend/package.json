@@ -9,9 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@gsap/react": "^2.1.2",
     "@paper-design/shaders-react": "^0.0.81",
     "@phosphor-icons/react": "^2.1.10",
+    "@supabase/supabase-js": "^2.118.0",
     "agentation": "^3.0.2",
     "clsx": "^2.1.1",
     "framer-motion": "^13.3.0",
